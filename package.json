@@ -5,7 +5,8 @@
     "start:renderer": "snowpack dev --open none",
     "build:main": "tsc ./src/main/**/*.ts --outDir ./build",
     "watch:main": "yarn build:main --incremental --tsBuildInfoFile ./tsbuildinfo -w",
-    "start:main": "yarn build:main && concurrently \"yarn watch:main\" \"electron ./build/main\""
+    "start:main": "yarn build:main && concurrently \"yarn watch:main\" \"electron ./build/main\"",
+    "start": "concurrently \"yarn start:renderer\" \"yarn wait-on http://localhost:8080 && yarn start:main\""
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
