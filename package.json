@@ -14,7 +14,9 @@
     "@material-ui/styles": "^4.11.3",
     "electron": "^11.3.0",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-router": "next",
+    "react-router-dom": "next"
   },
   "devDependencies": {
     "@snowpack/app-scripts-react": "^2.0.0",

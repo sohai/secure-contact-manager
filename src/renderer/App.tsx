@@ -1,15 +1,20 @@
-import React, { useState } from "react";
-import "./App.css";
+import React from "react";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { Button } from "@material-ui/core";
-import Test from "./components/Test";
+import { CssBaseline } from "@material-ui/core";
+import { FileProvider } from "./context/file.context";
+import ContactList from "./components/ContactList";
 
 const theme = createMuiTheme();
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Test />
+      <>
+        <CssBaseline />
+        <FileProvider>
+          <ContactList />
+        </FileProvider>
+      </>
     </ThemeProvider>
   );
 }
