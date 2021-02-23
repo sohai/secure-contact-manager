@@ -1,8 +1,25 @@
 import { app, BrowserWindow, dialog, ipcMain, Menu, MenuItem } from "electron";
 import type { MenuItemConstructorOptions } from "electron/main";
-import { createReadStream, readFileSync } from "fs";
+import {
+  createReadStream,
+  readdir,
+  mkdir,
+  access,
+  writeFile,
+  writeFileSync,
+} from "fs";
 import { promisify } from "util";
-const { pipeline } = require("stream");
+import { Contact } from "../types/Contact";
+
+const path = require("path");
+const os = require("os");
+
+const readdirAsync = promisify(readdir);
+const mkdirAsync = promisify(mkdir);
+const accessAsync = promisify(access);
+const writeFileAsync = promisify(writeFile);
+
+const appDir = path.resolve(os.homedir(), ".secure-contact-manager");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -11,8 +28,8 @@ let mainWindow: BrowserWindow;
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1024,
+    height: 860,
     webPreferences: {
       nodeIntegration: true,
     },
@@ -60,23 +77,43 @@ app.on("activate", () => {
   }
 });
 
-ipcMain.handle("app:open-file", async (event, ...args) => {
-  return openFile();
-});
+ipcMain.handle("app:open-file", openFile);
+ipcMain.handle("app:check-file", checkFile);
+ipcMain.handle("app:create-file", createFile);
+ipcMain.handle("app:save-file", saveFile);
+
+async function checkFile() {
+  try {
+    await accessAsync(appDir);
+    const files = await readdirAsync(appDir);
+
+    return files.length > 0;
+  } catch {
+    await mkdirAsync(appDir);
+    return false;
+  }
+}
+
+async function createFile() {
+  await writeFileAsync(path.join(appDir, "contacts.json"), JSON.stringify([]));
+  return []; //return file content
+}
 
 async function openFile() {
-  // Opens file dialog
-  const result = dialog.showOpenDialogSync(mainWindow, {
-    properties: ["openFile"],
-    filters: [{ name: "`JSON", extensions: ["json"] }],
-  });
-  // If no files
-  if (!result) return;
+  const files = await readdirAsync(appDir);
 
   let content = "";
-  const iterator = createReadStream(result[0]);
+  const iterator = createReadStream(path.join(appDir, files[0]));
   for await (const chunk of iterator) {
     content += chunk;
   }
   return JSON.parse(content);
+}
+
+async function saveFile(event, data: Contact[]) {
+  console.log(data)
+  await writeFileAsync(
+    path.join(appDir, "contacts.json"),
+    JSON.stringify(data)
+  );
 }

@@ -9,11 +9,14 @@ import AddIcon from "@material-ui/icons/Add";
 import MenuIcon from "@material-ui/icons/Menu";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import SearchIcon from "@material-ui/icons/Search";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ContactListItem from "./ContactListItem";
 import { useFileDispatch, useFileState } from "../context/file.context";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import ContactEditDialog from "./ContactEditDialog";
+import { CircularProgress } from "@material-ui/core";
+
+const { ipcRenderer } = window.require("electron");
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -58,9 +61,27 @@ export default function ContactList() {
   const { data: contacts, isLoaded } = useFileState();
   const dispatch = useFileDispatch();
 
+  const [syncing, setSyncing] = useState(false);
+
+  useEffect(() => {
+    let didCancel = false;
+    setSyncing(true);
+    async function getInit() {
+      await ipcRenderer.invoke("app:save-file", contacts);
+      if (!didCancel) {
+        setSyncing(false);
+      }
+    }
+
+    getInit();
+    return () => {
+      didCancel = true;
+    };
+  }, [contacts]);
+
   const handleClear = () => {
     dispatch({
-      type: "clear",
+      type: "reinit",
     });
   };
 
@@ -118,6 +139,7 @@ export default function ContactList() {
             <AddIcon />
           </Fab>
           <div className={classes.grow} />
+          {syncing && <CircularProgress />}
           <IconButton color="inherit">
             <SearchIcon />
           </IconButton>

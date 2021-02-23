@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/styles";
-import { Button, Typography } from "@material-ui/core";
+import { Button, CircularProgress, Typography } from "@material-ui/core";
 import LoadingButton from "./LoadingButton";
 import { useFileDispatch, useFileState } from "../context/file.context";
 import { Redirect } from "react-router";
@@ -24,39 +24,65 @@ export default function Welcome() {
   const classes = useStyles();
 
   const dispatch = useFileDispatch();
-  const { data, isLoaded } = useFileState();
+  const { isLoaded } = useFileState();
+  const [loadingFile, setLoadingFile] = useState(false);
+  const [initializing, setIsInitializing] = useState(true);
+  const [hasFile, setHasFile] = useState(false);
 
-  const [loading, setLoading] = useState(false);
+  React.useEffect(() => {
+    let didCancel = false;
+    setIsInitializing(true);
+    async function getInit() {
+      const hasFile = await ipcRenderer.invoke("app:check-file");
+      if (!didCancel) {
+        setHasFile(hasFile);
+        console.log(hasFile);
+        setIsInitializing(false);
+      }
+    }
+
+    getInit();
+    return () => {
+      didCancel = true;
+    };
+  }, []);
 
   const handleClick = async () => {
-    setLoading(true);
+    setLoadingFile(true);
     try {
-      const result = await ipcRenderer.invoke("app:open-file");
+      const result = await ipcRenderer.invoke(
+        hasFile ? "app:open-file" : "app:create-file"
+      );
       dispatch({
-        type: "set",
+        type: "set_contacts",
         payload: result,
       });
     } catch {
       // TODO: error handling
     } finally {
-      setLoading(false);
+      setLoadingFile(false);
     }
   };
   return (
     <>
-      {isLoaded && <Redirect to="/app" />} 
+      {isLoaded && <Redirect to="/app" />}
+
       <div className={classes.root}>
-        <Typography align="center" variant="h5" gutterBottom>
-          Welcome to <br />
-          Simple Secure Contact Manager
-        </Typography>
-        <Typography>
-          Please enter the password for your new contact data file.
-        </Typography>
-        <LoadingButton onClick={handleClick} loading={loading}>
-          Test
-        </LoadingButton>
-        {JSON.stringify(data)}
+        {initializing && <CircularProgress size={100} />}
+        {!initializing && (
+          <>
+            <Typography align="center" variant="h5" gutterBottom>
+              Welcome to <br />
+              Simple Secure Contact Manager {hasFile}
+            </Typography>
+            <Typography>
+              Please enter the password for your new contact data file.
+            </Typography>
+            <LoadingButton onClick={handleClick} loading={loadingFile}>
+              Test
+            </LoadingButton>
+          </>
+        )}
       </div>
     </>
   );

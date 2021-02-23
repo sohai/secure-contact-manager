@@ -2,36 +2,36 @@ import * as React from "react";
 import type { Contact } from "../../types/Contact";
 import { FileDispachContext, FileStateContext } from "./file.contex.providers";
 import { v4 as uuidv4 } from "uuid";
+const { ipcRenderer } = window.require("electron");
 
 type Action =
-  | { type: "set"; payload?: Contact[] }
-  | { type: "clear" }
+  | { type: "reinit" }
+  | { type: "set_contacts"; payload?: Contact[] }
   | { type: "save_contact"; payload: Contact }
-  | { type: "delete_contact"; payload: string }
-  | { type: "sync" }
-  | { type: "sync_pending" }
-  | { type: "sync_success" }
-  | { type: "sync_failed" };
+  | { type: "delete_contact"; payload: string };
 
 export type Dispatch = (action: Action) => void;
 export type State = { data: Contact[]; isLoaded: boolean };
 export type FileProviderProps = { children: React.ReactNode };
+
 const defaultValue = {
+  hasFile: null,
   data: [],
   isLoaded: false,
 };
 function fileReducer(state: State, action: Action): State {
   switch (action.type) {
-    case "set":
+    case "set_contacts":
       return {
         ...state,
         isLoaded: true,
         data: action.payload,
       };
 
-    case "clear":
+    case "reinit":
       return {
-        ...defaultValue,
+        ...state,
+        isLoaded: false,
       };
     case "save_contact": {
       const { payload } = action;
@@ -71,6 +71,7 @@ function fileReducer(state: State, action: Action): State {
 
 function FileProvider({ children }: FileProviderProps) {
   const [state, dispatch] = React.useReducer(fileReducer, defaultValue);
+
   return (
     <FileStateContext.Provider value={state}>
       <FileDispachContext.Provider value={dispatch}>
