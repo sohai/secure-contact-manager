@@ -59,14 +59,16 @@ function ContactMore({ address, phone }: ContactMoreProps) {
   );
 }
 
-type ContactListItemProps = Contact;
+type ContactListItemProps = {
+  contact: Contact;
+  onEdit: any;
+};
 
 export default function ContactListItem({
-  name,
-  email,
-  address,
-  phone,
+  contact,
+  onEdit,
 }: ContactListItemProps) {
+  const { name, email, address, phone } = contact;
   const [open, setOpen] = React.useState(false);
   const handleClick = () => {
     setOpen(!open);
@@ -83,7 +85,11 @@ export default function ContactListItem({
           <IconButton edge="end" aria-label="comments" onClick={handleClick}>
             <ExpandMoreIcon />
           </IconButton>
-          <IconButton edge="end" aria-label="comments">
+          <IconButton
+            edge="end"
+            aria-label="comments"
+            onClick={() => onEdit(contact)}
+          >
             <EditIcon />
           </IconButton>
         </ListItemSecondaryAction>

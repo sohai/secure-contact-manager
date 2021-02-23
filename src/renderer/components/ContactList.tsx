@@ -9,10 +9,11 @@ import AddIcon from "@material-ui/icons/Add";
 import MenuIcon from "@material-ui/icons/Menu";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import SearchIcon from "@material-ui/icons/Search";
-import React from "react";
+import React, { useMemo } from "react";
 import ContactListItem from "./ContactListItem";
 import { useFileDispatch, useFileState } from "../context/file.context";
 import { Link, Redirect } from "react-router-dom";
+import ContactEditDialog from "./ContactEditDialog";
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -44,6 +45,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const NEW_CONTACT = {
+  name: "",
+  address: "",
+  phone: "",
+  email: "",
+};
+
 export default function ContactList() {
   const classes = useStyles();
 
@@ -53,8 +61,29 @@ export default function ContactList() {
   const handleClear = () => {
     dispatch({
       type: "clear",
-      payload: null,
     });
+  };
+
+  const memoizedContacts = useMemo(
+    () =>
+      contacts.sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      }),
+    [contacts]
+  );
+
+  const [editContact, setEditContact] = React.useState(null);
+
+  const selectEditContact = (contact) => {
+    setEditContact(contact);
+  };
+
+  const handlCloseEditDialog = () => {
+    setEditContact(null);
+  };
+
+  const handleAddNewContact = () => {
+    setEditContact(NEW_CONTACT);
   };
 
   return (
@@ -62,22 +91,26 @@ export default function ContactList() {
       {!isLoaded && <Redirect to="/" />}
       <Paper square className={classes.paper}>
         <List className={classes.list} component="div">
-          {contacts.map((contact, idx) => (
-            <ContactListItem {...contact} key={idx} />
+          {memoizedContacts.map((contact) => (
+            <ContactListItem
+              key={contact.uuid}
+              contact={contact}
+              onEdit={(contact) => setEditContact(contact)}
+            />
           ))}
         </List>
       </Paper>
       <AppBar position="fixed" color="primary" className={classes.appBar}>
         <Toolbar>
-          <IconButton
-            onClick={handleClear}
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-          >
+          <IconButton onClick={handleClear} edge="start" color="inherit">
             <MenuIcon />
           </IconButton>
-          <Fab color="secondary" aria-label="add" className={classes.fabButton}>
+          <Fab
+            onClick={handleAddNewContact}
+            color="secondary"
+            aria-label="add"
+            className={classes.fabButton}
+          >
             <AddIcon />
           </Fab>
           <div className={classes.grow} />
@@ -89,6 +122,12 @@ export default function ContactList() {
           </IconButton>
         </Toolbar>
       </AppBar>
+      {editContact && (
+        <ContactEditDialog
+          onClose={handlCloseEditDialog}
+          contact={editContact}
+        />
+      )}
     </React.Fragment>
   );
 }

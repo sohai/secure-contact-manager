@@ -1,10 +1,17 @@
 import * as React from "react";
 import type { Contact } from "../../types/Contact";
 import { FileDispachContext, FileStateContext } from "./file.contex.providers";
+import { v4 as uuidv4 } from "uuid";
 
 type Action =
   | { type: "set"; payload?: Contact[] }
-  | { type: "clear"; payload: State | null };
+  | { type: "clear" }
+  | { type: "save_contact"; payload: Contact }
+  | { type: "sync" }
+  | { type: "sync_pending" }
+  | { type: " sync_success" }
+  | { type: "sync_failed" };
+
 export type Dispatch = (action: Action) => void;
 export type State = { data: Contact[]; isLoaded: boolean };
 export type FileProviderProps = { children: React.ReactNode };
@@ -12,21 +19,45 @@ const defaultValue = {
   data: [],
   isLoaded: false,
 };
-function fileReducer(state: State, { type, payload }: Action): State {
-  switch (type) {
+function fileReducer(state: State, action: Action): State {
+  switch (action.type) {
     case "set":
       return {
         ...state,
         isLoaded: true,
-        data: payload,
+        data: action.payload,
       };
-    case "clear": {
+
+    case "clear":
       return {
         ...defaultValue,
       };
+    case "save_contact": {
+      const { payload } = action;
+      const isNew = !payload.uuid;
+      console.log(isNew, payload);
+      if (isNew) {
+        return {
+          ...state,
+          data: [
+            ...state.data,
+            {
+              ...payload,
+              uuid: uuidv4(),
+            },
+          ],
+        };
+      }
+      return {
+        ...state,
+        data: [
+          ...state.data.filter(({ uuid }) => uuid !== action.payload.uuid),
+          action.payload,
+        ],
+      };
     }
     default: {
-      throw new Error(`Unhandled action type: ${type}`);
+      throw new Error(`Unhandled action type: ${action.type}`);
     }
   }
 }

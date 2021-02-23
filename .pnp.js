@@ -59,11 +59,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.2.1"],
             ["react", "npm:17.0.1"],
             ["react-dom", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:17.0.1"],
+            ["react-hook-form", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:6.15.4"],
             ["react-router", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:5.2.0"],
             ["react-router-dom", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:5.2.0"],
             ["rollup-plugin-pnp-resolve", "npm:2.0.0"],
             ["snowpack", "npm:3.0.11"],
-            ["typescript", "patch:typescript@npm%3A4.1.5#builtin<compat/typescript>::version=4.1.5&hash=cc6730"]
+            ["typescript", "patch:typescript@npm%3A4.1.5#builtin<compat/typescript>::version=4.1.5&hash=cc6730"],
+            ["uuid", "npm:8.3.2"]
           ],
           "linkType": "SOFT",
         }]
@@ -7775,6 +7777,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["react-hook-form", [
+        ["npm:6.15.4", {
+          "packageLocation": "./.yarn/cache/react-hook-form-npm-6.15.4-8b06f3e086-4f866330dd.zip/node_modules/react-hook-form/",
+          "packageDependencies": [
+            ["react-hook-form", "npm:6.15.4"]
+          ],
+          "linkType": "SOFT",
+        }],
+        ["virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:6.15.4", {
+          "packageLocation": "./.yarn/$$virtual/react-hook-form-virtual-16f64a3269/0/cache/react-hook-form-npm-6.15.4-8b06f3e086-4f866330dd.zip/node_modules/react-hook-form/",
+          "packageDependencies": [
+            ["react-hook-form", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:6.15.4"],
+            ["@types/react", "npm:17.0.2"],
+            ["react", "npm:17.0.1"]
+          ],
+          "packagePeers": [
+            "@types/react",
+            "react"
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["react-is", [
         ["npm:16.13.1", {
           "packageLocation": "./.yarn/cache/react-is-npm-16.13.1-a9b9382b4f-11bcf1267a.zip/node_modules/react-is/",
@@ -8342,11 +8366,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.2.1"],
             ["react", "npm:17.0.1"],
             ["react-dom", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:17.0.1"],
+            ["react-hook-form", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:6.15.4"],
             ["react-router", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:5.2.0"],
             ["react-router-dom", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:5.2.0"],
             ["rollup-plugin-pnp-resolve", "npm:2.0.0"],
             ["snowpack", "npm:3.0.11"],
-            ["typescript", "patch:typescript@npm%3A4.1.5#builtin<compat/typescript>::version=4.1.5&hash=cc6730"]
+            ["typescript", "patch:typescript@npm%3A4.1.5#builtin<compat/typescript>::version=4.1.5&hash=cc6730"],
+            ["uuid", "npm:8.3.2"]
           ],
           "linkType": "SOFT",
         }]
@@ -9209,6 +9235,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/uuid-npm-3.4.0-4fd8ef88ad-1ce3f37e21.zip/node_modules/uuid/",
           "packageDependencies": [
             ["uuid", "npm:3.4.0"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:8.3.2", {
+          "packageLocation": "./.yarn/cache/uuid-npm-8.3.2-eca0baba53-aed2bcef34.zip/node_modules/uuid/",
+          "packageDependencies": [
+            ["uuid", "npm:8.3.2"]
           ],
           "linkType": "HARD",
         }]

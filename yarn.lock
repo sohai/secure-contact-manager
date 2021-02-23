@@ -5775,6 +5775,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:^6.15.4":
+  version: 6.15.4
+  resolution: "react-hook-form@npm:6.15.4"
+  peerDependencies:
+    react: ^16.8.0 || ^17
+  checksum: 4f866330ddf30e0607e0c5c2ecdb7838e70872fad5b4d39240ecbf2e5f81e37357edf8b667bd939ce019976d6872a52dda94d4991862cb2010636050a779c4f0
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.6.0, react-is@npm:^16.7.0, react-is@npm:^16.8.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -6278,11 +6287,13 @@ __metadata:
     prettier: ^2.2.1
     react: ^17.0.1
     react-dom: ^17.0.1
+    react-hook-form: ^6.15.4
     react-router: ^5.2.0
     react-router-dom: ^5.2.0
     rollup-plugin-pnp-resolve: ^2.0.0
     snowpack: ^3.0.11
     typescript: ^4.1.5
+    uuid: ^8.3.2
   languageName: unknown
   linkType: soft
 
@@ -7080,6 +7091,15 @@ typescript@^4.1.5:
   bin:
     uuid: ./bin/uuid
   checksum: 1ce3f37e214d6d0dc94a6a9663a0365013ace66bc3fd5b203e6f5d2eeb978aaee1192367222386345d30b4c6a447928c501121aa84c637724bf105ef57284949
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^8.3.2":
+  version: 8.3.2
+  resolution: "uuid@npm:8.3.2"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: aed2bcef341f95635f308fea8831fb9038b18c485fe7e71feb89d2e05602dfecad0cb6f2246fae096d4da425cca6e8a71056f28abd97ad98cf770a2018853248
   languageName: node
   linkType: hard
 
