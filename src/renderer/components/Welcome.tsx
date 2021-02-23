@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/styles";
 import { Button, Typography } from "@material-ui/core";
 import LoadingButton from "./LoadingButton";
 import { useFileDispatch, useFileState } from "../context/file.context";
+import { Redirect } from "react-router";
 
 declare var window: any;
 
@@ -23,7 +24,7 @@ export default function Welcome() {
   const classes = useStyles();
 
   const dispatch = useFileDispatch();
-  const fileState = useFileState();
+  const { data, isLoaded } = useFileState();
 
   const [loading, setLoading] = useState(false);
 
@@ -42,18 +43,21 @@ export default function Welcome() {
     }
   };
   return (
-    <div className={classes.root}>
-      <Typography align="center" variant="h5" gutterBottom>
-        Welcome to <br />
-        Simple Secure Contact Manager
-      </Typography>
-      <Typography>
-        Please enter the password for your new contact data file.
-      </Typography>
-      <LoadingButton onClick={handleClick} loading={loading}>
-        Test
-      </LoadingButton>
-      {JSON.stringify(fileState)}
-    </div>
+    <>
+      {isLoaded && <Redirect to="/app" />} 
+      <div className={classes.root}>
+        <Typography align="center" variant="h5" gutterBottom>
+          Welcome to <br />
+          Simple Secure Contact Manager
+        </Typography>
+        <Typography>
+          Please enter the password for your new contact data file.
+        </Typography>
+        <LoadingButton onClick={handleClick} loading={loading}>
+          Test
+        </LoadingButton>
+        {JSON.stringify(data)}
+      </div>
+    </>
   );
 }

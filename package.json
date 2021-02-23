@@ -6,7 +6,7 @@
     "watch:main": "yarn build:main -w",
     "start:main": "yarn build:main && concurrently \"yarn watch:main\" \"electron ./build/main/main\"",
     "start:electron": "electron ./build/main/main",
-    "start": "concurrently \"yarn start:renderer\" \"yarn wait-on http://localhost:8080 && yarn start:main\""
+    "start": "concurrently \"yarn start:renderer\" \"yarn wait-on http://localhost:8080  && yarn start:main\""
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
@@ -16,8 +16,8 @@
     "electron-reloader": "^1.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-router": "next",
-    "react-router-dom": "next"
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@snowpack/app-scripts-react": "^2.0.0",
@@ -28,6 +28,8 @@
     "@types/node": "^14.14.31",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
+    "@types/react-router": "^5.1.11",
+    "@types/react-router-dom": "^5.1.7",
     "@types/snowpack-env": "^2.3.3",
     "@yarnpkg/pnpify": "^2.4.0",
     "concurrently": "^6.0.0",

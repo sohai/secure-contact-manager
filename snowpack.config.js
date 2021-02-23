@@ -1,4 +1,5 @@
 module.exports = {
+  exclude: ["**/node_modules/**/*", "**/src/main/**/*"],
   extends: "@snowpack/app-scripts-react",
   mount: {
     public: { url: "/", static: true },

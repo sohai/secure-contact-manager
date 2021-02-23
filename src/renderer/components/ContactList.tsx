@@ -11,7 +11,8 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import SearchIcon from "@material-ui/icons/Search";
 import React from "react";
 import ContactListItem from "./ContactListItem";
-import { useFileState } from "../context/file.context";
+import { useFileDispatch, useFileState } from "../context/file.context";
+import { Link, Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -46,10 +47,19 @@ const useStyles = makeStyles((theme) => ({
 export default function ContactList() {
   const classes = useStyles();
 
-  const { data: contacts } = useFileState();
+  const { data: contacts, isLoaded } = useFileState();
+  const dispatch = useFileDispatch();
+
+  const handleClear = () => {
+    dispatch({
+      type: "clear",
+      payload: null,
+    });
+  };
 
   return (
     <React.Fragment>
+      {!isLoaded && <Redirect to="/" />}
       <Paper square className={classes.paper}>
         <List className={classes.list} component="div">
           {contacts.map((contact, idx) => (
@@ -59,7 +69,12 @@ export default function ContactList() {
       </Paper>
       <AppBar position="fixed" color="primary" className={classes.appBar}>
         <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="open drawer">
+          <IconButton
+            onClick={handleClear}
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+          >
             <MenuIcon />
           </IconButton>
           <Fab color="secondary" aria-label="add" className={classes.fabButton}>

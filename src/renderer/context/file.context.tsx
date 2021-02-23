@@ -1,30 +1,35 @@
 import * as React from "react";
 import type { Contact } from "../../types/Contact";
+import { FileDispachContext, FileStateContext } from "./file.contex.providers";
 
-type Action = { type: "set"; payload: Contact[] };
-type Dispatch = (action: Action) => void;
-type State = { data: Contact[] };
-type FileProviderProps = { children: React.ReactNode };
-
-const FileStateContext = React.createContext<State | undefined>(undefined);
-const FileDispachContext = React.createContext<Dispatch | undefined>(undefined);
-
+type Action =
+  | { type: "set"; payload?: Contact[] }
+  | { type: "clear"; payload: State | null };
+export type Dispatch = (action: Action) => void;
+export type State = { data: Contact[]; isLoaded: boolean };
+export type FileProviderProps = { children: React.ReactNode };
+const defaultValue = {
+  data: [],
+  isLoaded: false,
+};
 function fileReducer(state: State, { type, payload }: Action): State {
   switch (type) {
     case "set":
       return {
         ...state,
+        isLoaded: true,
         data: payload,
       };
+    case "clear": {
+      return {
+        ...defaultValue,
+      };
+    }
     default: {
       throw new Error(`Unhandled action type: ${type}`);
     }
   }
 }
-
-const defaultValue = {
-  data: [],
-};
 
 function FileProvider({ children }: FileProviderProps) {
   const [state, dispatch] = React.useReducer(fileReducer, defaultValue);
