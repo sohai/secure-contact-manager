@@ -8,6 +8,7 @@ module.exports = {
     baseUrl: "./",
   },
   packageOptions: {
+    polyfillNode: true,
     rollup: {
       plugins: [require("rollup-plugin-pnp-resolve")()],
     },

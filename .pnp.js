@@ -52,6 +52,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@yarnpkg/pnpify", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:2.4.0"],
             ["concurrently", "npm:6.0.0"],
             ["electron", "npm:11.3.0"],
+            ["electron-reload", "npm:1.5.0"],
+            ["electron-reloader", "npm:1.2.0"],
             ["prettier", "npm:2.2.1"],
             ["react", "npm:17.0.1"],
             ["react-dom", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:17.0.1"],
@@ -4027,6 +4029,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["binary-extensions", [
+        ["npm:2.2.0", {
+          "packageLocation": "./.yarn/cache/binary-extensions-npm-2.2.0-180c33fec7-0f5f5685f3.zip/node_modules/binary-extensions/",
+          "packageDependencies": [
+            ["binary-extensions", "npm:2.2.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["binjumper", [
         ["npm:0.1.4", {
           "packageLocation": "./.yarn/cache/binjumper-npm-0.1.4-8ed133195d-07b0f2cf66.zip/node_modules/binjumper/",
@@ -4288,6 +4299,23 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["chalk", "npm:4.1.0"],
             ["ansi-styles", "npm:4.3.0"],
             ["supports-color", "npm:7.2.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["chokidar", [
+        ["npm:3.5.1", {
+          "packageLocation": "./.yarn/cache/chokidar-npm-3.5.1-205217279e-61b3f710f9.zip/node_modules/chokidar/",
+          "packageDependencies": [
+            ["chokidar", "npm:3.5.1"],
+            ["anymatch", "npm:3.1.1"],
+            ["braces", "npm:3.0.2"],
+            ["fsevents", "patch:fsevents@npm%3A2.3.2#builtin<compat/fsevents>::version=2.3.2&hash=11e9ea"],
+            ["glob-parent", "npm:5.1.1"],
+            ["is-binary-path", "npm:2.1.0"],
+            ["is-glob", "npm:4.0.1"],
+            ["normalize-path", "npm:3.0.0"],
+            ["readdirp", "npm:3.5.0"]
           ],
           "linkType": "HARD",
         }]
@@ -4650,6 +4678,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["date-time", [
+        ["npm:3.1.0", {
+          "packageLocation": "./.yarn/cache/date-time-npm-3.1.0-50f6af7aef-8644bd8b94.zip/node_modules/date-time/",
+          "packageDependencies": [
+            ["date-time", "npm:3.1.0"],
+            ["time-zone", "npm:1.0.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["debug", [
         ["npm:2.6.9", {
           "packageLocation": "./.yarn/cache/debug-npm-2.6.9-7d4cb597dc-559f44f98c.zip/node_modules/debug/",
@@ -4873,6 +4911,39 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@electron/get", "npm:1.12.4"],
             ["@types/node", "npm:12.20.4"],
             ["extract-zip", "npm:1.7.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["electron-is-dev", [
+        ["npm:1.2.0", {
+          "packageLocation": "./.yarn/cache/electron-is-dev-npm-1.2.0-f6fed56f96-0d747f0037.zip/node_modules/electron-is-dev/",
+          "packageDependencies": [
+            ["electron-is-dev", "npm:1.2.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["electron-reload", [
+        ["npm:1.5.0", {
+          "packageLocation": "./.yarn/cache/electron-reload-npm-1.5.0-5785bf3a8c-055ccd7dc3.zip/node_modules/electron-reload/",
+          "packageDependencies": [
+            ["electron-reload", "npm:1.5.0"],
+            ["chokidar", "npm:3.5.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["electron-reloader", [
+        ["npm:1.2.0", {
+          "packageLocation": "./.yarn/cache/electron-reloader-npm-1.2.0-f42d10393c-183586d054.zip/node_modules/electron-reloader/",
+          "packageDependencies": [
+            ["electron-reloader", "npm:1.2.0"],
+            ["chalk", "npm:4.1.0"],
+            ["chokidar", "npm:3.5.1"],
+            ["date-time", "npm:3.1.0"],
+            ["electron-is-dev", "npm:1.2.0"],
+            ["find-up", "npm:5.0.0"]
           ],
           "linkType": "HARD",
         }]
@@ -5223,6 +5294,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["find-up", "npm:4.1.0"],
             ["locate-path", "npm:5.0.0"],
+            ["path-exists", "npm:4.0.0"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:5.0.0", {
+          "packageLocation": "./.yarn/cache/find-up-npm-5.0.0-e03e9b796d-cd0b77415b.zip/node_modules/find-up/",
+          "packageDependencies": [
+            ["find-up", "npm:5.0.0"],
+            ["locate-path", "npm:6.0.0"],
             ["path-exists", "npm:4.0.0"]
           ],
           "linkType": "HARD",
@@ -5874,6 +5954,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/is-arrayish-npm-0.2.1-23927dfb15-fc2bbe14db.zip/node_modules/is-arrayish/",
           "packageDependencies": [
             ["is-arrayish", "npm:0.2.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["is-binary-path", [
+        ["npm:2.1.0", {
+          "packageLocation": "./.yarn/cache/is-binary-path-npm-2.1.0-e61d46f557-49a1446a3c.zip/node_modules/is-binary-path/",
+          "packageDependencies": [
+            ["is-binary-path", "npm:2.1.0"],
+            ["binary-extensions", "npm:2.2.0"]
           ],
           "linkType": "HARD",
         }]
@@ -6566,6 +6656,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["p-locate", "npm:4.1.0"]
           ],
           "linkType": "HARD",
+        }],
+        ["npm:6.0.0", {
+          "packageLocation": "./.yarn/cache/locate-path-npm-6.0.0-06a1e4c528-4c37963815.zip/node_modules/locate-path/",
+          "packageDependencies": [
+            ["locate-path", "npm:6.0.0"],
+            ["p-locate", "npm:5.0.0"]
+          ],
+          "linkType": "HARD",
         }]
       ]],
       ["lodash", [
@@ -7159,6 +7257,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["p-try", "npm:2.2.0"]
           ],
           "linkType": "HARD",
+        }],
+        ["npm:3.1.0", {
+          "packageLocation": "./.yarn/cache/p-limit-npm-3.1.0-05d2ede37f-5301db6a34.zip/node_modules/p-limit/",
+          "packageDependencies": [
+            ["p-limit", "npm:3.1.0"],
+            ["yocto-queue", "npm:0.1.0"]
+          ],
+          "linkType": "HARD",
         }]
       ]],
       ["p-locate", [
@@ -7167,6 +7273,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["p-locate", "npm:4.1.0"],
             ["p-limit", "npm:2.3.0"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:5.0.0", {
+          "packageLocation": "./.yarn/cache/p-locate-npm-5.0.0-92cc7c7a3e-a233d775c8.zip/node_modules/p-locate/",
+          "packageDependencies": [
+            ["p-locate", "npm:5.0.0"],
+            ["p-limit", "npm:3.1.0"]
           ],
           "linkType": "HARD",
         }]
@@ -7712,6 +7826,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["readdirp", [
+        ["npm:3.5.0", {
+          "packageLocation": "./.yarn/cache/readdirp-npm-3.5.0-a1b1568d32-a64fe56069.zip/node_modules/readdirp/",
+          "packageDependencies": [
+            ["readdirp", "npm:3.5.0"],
+            ["picomatch", "npm:2.2.2"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["regenerate", [
         ["npm:1.4.2", {
           "packageLocation": "./.yarn/cache/regenerate-npm-1.4.2-b296c5b63a-54275a99ef.zip/node_modules/regenerate/",
@@ -8098,6 +8222,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@yarnpkg/pnpify", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:2.4.0"],
             ["concurrently", "npm:6.0.0"],
             ["electron", "npm:11.3.0"],
+            ["electron-reload", "npm:1.5.0"],
+            ["electron-reloader", "npm:1.2.0"],
             ["prettier", "npm:2.2.1"],
             ["react", "npm:17.0.1"],
             ["react-dom", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:17.0.1"],
@@ -8639,6 +8765,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["time-zone", [
+        ["npm:1.0.0", {
+          "packageLocation": "./.yarn/cache/time-zone-npm-1.0.0-0522e3467f-eb2155a457.zip/node_modules/time-zone/",
+          "packageDependencies": [
+            ["time-zone", "npm:1.0.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["tiny-warning", [
         ["npm:1.0.3", {
           "packageLocation": "./.yarn/cache/tiny-warning-npm-1.0.3-750b7a07c4-6cf9f66cb7.zip/node_modules/tiny-warning/",
@@ -9126,6 +9261,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["yauzl", "npm:2.10.0"],
             ["buffer-crc32", "npm:0.2.13"],
             ["fd-slicer", "npm:1.1.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["yocto-queue", [
+        ["npm:0.1.0", {
+          "packageLocation": "./.yarn/cache/yocto-queue-npm-0.1.0-c6c9a7db29-096c3b40be.zip/node_modules/yocto-queue/",
+          "packageDependencies": [
+            ["yocto-queue", "npm:0.1.0"]
           ],
           "linkType": "HARD",
         }]

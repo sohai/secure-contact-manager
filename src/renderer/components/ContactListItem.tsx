@@ -17,7 +17,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import EditIcon from "@material-ui/icons/Edit";
 import PhoneIcon from "@material-ui/icons/Phone";
 import ContactMailIcon from "@material-ui/icons/ContactMail";
-import type { Contact } from "../types/Contact";
+import type { Contact } from "../../types/Contact";
 
 const getInitials = (name: String) => {
   const arr = name.split(" ");

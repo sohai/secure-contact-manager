@@ -1,11 +1,11 @@
 {
   "name": "secure-contact-manager",
-  "main": "",
   "scripts": {
     "start:renderer": "snowpack dev --open none",
-    "build:main": "tsc ./src/main/**/*.ts --outDir ./build",
-    "watch:main": "yarn build:main --incremental --tsBuildInfoFile ./tsbuildinfo -w",
-    "start:main": "yarn build:main && concurrently \"yarn watch:main\" \"electron ./build/main\"",
+    "build:main": "tsc -p tsconfig.main.json",
+    "watch:main": "yarn build:main -w",
+    "start:main": "yarn build:main && concurrently \"yarn watch:main\" \"electron ./build/main/main\"",
+    "start:electron": "electron ./build/main/main",
     "start": "concurrently \"yarn start:renderer\" \"yarn wait-on http://localhost:8080 && yarn start:main\""
   },
   "dependencies": {
@@ -13,6 +13,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/styles": "^4.11.3",
     "electron": "^11.3.0",
+    "electron-reloader": "^1.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router": "next",
@@ -30,6 +31,7 @@
     "@types/snowpack-env": "^2.3.3",
     "@yarnpkg/pnpify": "^2.4.0",
     "concurrently": "^6.0.0",
+    "electron-reload": "^1.5.0",
     "prettier": "^2.2.1",
     "rollup-plugin-pnp-resolve": "^2.0.0",
     "snowpack": "^3.0.11",

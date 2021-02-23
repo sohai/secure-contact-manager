@@ -1,23 +1,41 @@
-const { app, BrowserWindow } = require("electron");
+import { app, BrowserWindow, dialog, ipcMain, Menu, MenuItem } from "electron";
+import type { MenuItemConstructorOptions } from "electron/main";
+import { createReadStream, readFileSync } from "fs";
+import { promisify } from "util";
+const { pipeline } = require("stream");
+
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
+let mainWindow: BrowserWindow;
 
 function createWindow() {
   // Create the browser window.
-  const win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      contextIsolation: true,
+      nodeIntegration: true,
     },
   });
 
   if (process.env.NODE_ENV === "production") {
-    win.loadFile("./build/index.html");
+    mainWindow.loadFile("./build/index.html");
   } else {
-    win.loadURL("http://localhost:8080");
+    mainWindow.loadURL("http://localhost:8080");
   }
 
+  const template: MenuItemConstructorOptions[] = [
+    {
+      label: "File",
+      submenu: [{ label: "asd", click: () => openFile() }],
+    },
+  ];
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+
   // Open the DevTools.
-  win.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
+  console.log(process.env.NODE_ENV);
 }
 
 // This method will be called when Electron has finished
@@ -42,5 +60,23 @@ app.on("activate", () => {
   }
 });
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them
+ipcMain.handle("app:open-file", async (event, ...args) => {
+  return openFile();
+});
+
+async function openFile() {
+  // Opens file dialog
+  const result = dialog.showOpenDialogSync(mainWindow, {
+    properties: ["openFile"],
+    filters: [{ name: "`JSON", extensions: ["json"] }],
+  });
+  // If no files
+  if (!result) return;
+
+  let content = "";
+  const iterator = createReadStream(result[0]);
+  for await (const chunk of iterator) {
+    content += chunk;
+  }
+  return JSON.parse(content);
+}
