@@ -7,7 +7,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import AddIcon from "@material-ui/icons/Add";
 import MenuIcon from "@material-ui/icons/Menu";
-import MoreIcon from "@material-ui/icons/MoreVert";
 import SearchIcon from "@material-ui/icons/Search";
 import React, { useEffect, useMemo, useState } from "react";
 import ContactListItem from "./ContactListItem";
@@ -15,6 +14,7 @@ import { useFileDispatch, useFileState } from "../context/file.context";
 import { Redirect } from "react-router-dom";
 import ContactEditDialog from "./ContactEditDialog";
 import { CircularProgress } from "@material-ui/core";
+import type { Contact } from "../../types/Contact";
 
 const { ipcRenderer } = window.require("electron");
 
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NEW_CONTACT = {
+const NEW_CONTACT: Partial<Contact> = {
   name: "",
   address: "",
   phone: "",
@@ -85,6 +85,8 @@ export default function ContactList() {
     });
   };
 
+  /** I thnik its good to keep in store/context unsorted data and deal with it locally because
+   * I can image that this app could have sorting functionality */
   const memoizedContacts = useMemo(
     () =>
       contacts.sort((a, b) => {
@@ -93,7 +95,7 @@ export default function ContactList() {
     [contacts]
   );
 
-  const [editContact, setEditContact] = React.useState(null);
+  const [editContact, setEditContact] = useState<Partial<Contact> | null>(null);
 
   const handlCloseEditDialog = () => {
     setEditContact(null);
@@ -103,7 +105,7 @@ export default function ContactList() {
     setEditContact(NEW_CONTACT);
   };
 
-  const handleDeleteContact = (uuid) => {
+  const handleDeleteContact = (uuid: string) => {
     dispatch({
       type: "delete_contact",
       payload: uuid,
@@ -119,7 +121,7 @@ export default function ContactList() {
             <ContactListItem
               key={contact.uuid}
               contact={contact}
-              onEdit={(contact) => setEditContact(contact)}
+              onEdit={(contact: Contact) => setEditContact(contact)}
               onDelete={handleDeleteContact}
             />
           ))}
@@ -142,9 +144,6 @@ export default function ContactList() {
           {syncing && <CircularProgress />}
           <IconButton color="inherit">
             <SearchIcon />
-          </IconButton>
-          <IconButton edge="end" color="inherit">
-            <MoreIcon />
           </IconButton>
         </Toolbar>
       </AppBar>

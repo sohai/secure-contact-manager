@@ -4,11 +4,13 @@ import TextField from "@material-ui/core/TextField";
 import Dialog, { DialogProps } from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import { Contact } from "../../types/Contact";
+import type { Contact } from "../../types/Contact";
 import { useForm, Controller } from "react-hook-form";
 import { useFileDispatch } from "../context/file.context";
 
-type ContactEditDialogProps = Omit<DialogProps, "open"> & { contact: Contact };
+type ContactEditDialogProps = Omit<DialogProps, "open"> & {
+  contact: Partial<Contact>;
+};
 
 function ContactEditDialog({
   contact,
@@ -17,16 +19,9 @@ function ContactEditDialog({
 }: ContactEditDialogProps) {
   const dispatch = useFileDispatch();
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    errors,
-    control,
-  } = useForm<Contact>();
+  const { register, handleSubmit, control } = useForm<Contact>();
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: Contact) => {
     dispatch({
       type: "save_contact",
       payload: data,

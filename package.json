@@ -33,6 +33,7 @@
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
     "@types/snowpack-env": "^2.3.3",
+    "@types/uuid": "^8.3.0",
     "@yarnpkg/pnpify": "^2.4.0",
     "concurrently": "^6.0.0",
     "electron-reload": "^1.5.0",

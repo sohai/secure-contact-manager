@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/styles";
 import { Button, CircularProgress, Typography } from "@material-ui/core";
 import LoadingButton from "./LoadingButton";
@@ -29,14 +29,13 @@ export default function Welcome() {
   const [initializing, setIsInitializing] = useState(true);
   const [hasFile, setHasFile] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     let didCancel = false;
     setIsInitializing(true);
     async function getInit() {
       const hasFile = await ipcRenderer.invoke("app:check-file");
       if (!didCancel) {
         setHasFile(hasFile);
-        console.log(hasFile);
         setIsInitializing(false);
       }
     }

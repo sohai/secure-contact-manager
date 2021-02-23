@@ -51,6 +51,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react-router", "npm:5.1.11"],
             ["@types/react-router-dom", "npm:5.1.7"],
             ["@types/snowpack-env", "npm:2.3.3"],
+            ["@types/uuid", "npm:8.3.0"],
             ["@yarnpkg/pnpify", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:2.4.0"],
             ["concurrently", "npm:6.0.0"],
             ["electron", "npm:11.3.0"],
@@ -3451,6 +3452,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-treeify-npm-1.0.0-b5e04e9cd3-f7b82d91a4.zip/node_modules/@types/treeify/",
           "packageDependencies": [
             ["@types/treeify", "npm:1.0.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@types/uuid", [
+        ["npm:8.3.0", {
+          "packageLocation": "./.yarn/cache/@types-uuid-npm-8.3.0-60b441a3d7-620985aed8.zip/node_modules/@types/uuid/",
+          "packageDependencies": [
+            ["@types/uuid", "npm:8.3.0"]
           ],
           "linkType": "HARD",
         }]
@@ -8358,6 +8368,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react-router", "npm:5.1.11"],
             ["@types/react-router-dom", "npm:5.1.7"],
             ["@types/snowpack-env", "npm:2.3.3"],
+            ["@types/uuid", "npm:8.3.0"],
             ["@yarnpkg/pnpify", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:2.4.0"],
             ["concurrently", "npm:6.0.0"],
             ["electron", "npm:11.3.0"],

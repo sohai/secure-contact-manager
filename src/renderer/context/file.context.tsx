@@ -6,7 +6,7 @@ const { ipcRenderer } = window.require("electron");
 
 type Action =
   | { type: "reinit" }
-  | { type: "set_contacts"; payload?: Contact[] }
+  | { type: "set_contacts"; payload: Contact[] }
   | { type: "save_contact"; payload: Contact }
   | { type: "delete_contact"; payload: string };
 
@@ -15,7 +15,6 @@ export type State = { data: Contact[]; isLoaded: boolean };
 export type FileProviderProps = { children: React.ReactNode };
 
 const defaultValue = {
-  hasFile: null,
   data: [],
   isLoaded: false,
 };
@@ -36,7 +35,6 @@ function fileReducer(state: State, action: Action): State {
     case "save_contact": {
       const { payload } = action;
       const isNew = !payload.uuid;
-      console.log(isNew, payload);
       if (isNew) {
         return {
           ...state,
@@ -64,7 +62,7 @@ function fileReducer(state: State, action: Action): State {
       };
     }
     default: {
-      throw new Error(`Unhandled action type: ${action.type}`);
+      throw new Error(`Unhandled action type: ${(action as Action).type}`);
     }
   }
 }

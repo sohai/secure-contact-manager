@@ -14,13 +14,15 @@ import {
   Typography,
 } from "@material-ui/core";
 import { styled } from "@material-ui/styles";
-import React from "react";
+import React, { useState } from "react";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import EditIcon from "@material-ui/icons/Edit";
 import PhoneIcon from "@material-ui/icons/Phone";
 import ContactMailIcon from "@material-ui/icons/ContactMail";
 import type { Contact } from "../../types/Contact";
 import DeleteIcon from "@material-ui/icons/Delete";
+
+/** I prefer to keep privet function/components in the same file until it is too big */
 
 const getInitials = (name: String) => {
   const arr = name.split(" ");
@@ -64,8 +66,8 @@ function ContactMore({ address, phone }: ContactMoreProps) {
 
 type ContactListItemProps = {
   contact: Contact;
-  onEdit: any;
-  onDelete: any;
+  onEdit: (contact: Contact) => void;
+  onDelete: (contact: string) => void;
 };
 
 export default function ContactListItem({
@@ -74,7 +76,7 @@ export default function ContactListItem({
   onDelete,
 }: ContactListItemProps) {
   const { name, email, address, phone, uuid } = contact;
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleClick = () => {
     setOpen(!open);
   };

@@ -1974,6 +1974,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/uuid@npm:^8.3.0":
+  version: 8.3.0
+  resolution: "@types/uuid@npm:8.3.0"
+  checksum: 620985aed8fdb4aed153daca5235f4303457a67a4d181efac0021712eabd9edd7e88895f79730c0e651effde7633b1b61e49a81519ac8d4e75019d2ac9b6412f
+  languageName: node
+  linkType: hard
+
 "@types/yargs-parser@npm:*":
   version: 20.2.0
   resolution: "@types/yargs-parser@npm:20.2.0"
@@ -6279,6 +6286,7 @@ __metadata:
     "@types/react-router": ^5.1.11
     "@types/react-router-dom": ^5.1.7
     "@types/snowpack-env": ^2.3.3
+    "@types/uuid": ^8.3.0
     "@yarnpkg/pnpify": ^2.4.0
     concurrently: ^6.0.0
     electron: ^11.3.0
