@@ -74,16 +74,19 @@ export default function ContactList() {
 
   const [editContact, setEditContact] = React.useState(null);
 
-  const selectEditContact = (contact) => {
-    setEditContact(contact);
-  };
-
   const handlCloseEditDialog = () => {
     setEditContact(null);
   };
 
   const handleAddNewContact = () => {
     setEditContact(NEW_CONTACT);
+  };
+
+  const handleDeleteContact = (uuid) => {
+    dispatch({
+      type: "delete_contact",
+      payload: uuid,
+    });
   };
 
   return (
@@ -96,6 +99,7 @@ export default function ContactList() {
               key={contact.uuid}
               contact={contact}
               onEdit={(contact) => setEditContact(contact)}
+              onDelete={handleDeleteContact}
             />
           ))}
         </List>

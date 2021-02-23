@@ -1,5 +1,7 @@
 import {
   Avatar,
+  Box,
+  Button,
   Collapse,
   IconButton,
   List,
@@ -18,6 +20,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import PhoneIcon from "@material-ui/icons/Phone";
 import ContactMailIcon from "@material-ui/icons/ContactMail";
 import type { Contact } from "../../types/Contact";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const getInitials = (name: String) => {
   const arr = name.split(" ");
@@ -62,13 +65,15 @@ function ContactMore({ address, phone }: ContactMoreProps) {
 type ContactListItemProps = {
   contact: Contact;
   onEdit: any;
+  onDelete: any;
 };
 
 export default function ContactListItem({
   contact,
   onEdit,
+  onDelete,
 }: ContactListItemProps) {
-  const { name, email, address, phone } = contact;
+  const { name, email, address, phone, uuid } = contact;
   const [open, setOpen] = React.useState(false);
   const handleClick = () => {
     setOpen(!open);
@@ -95,7 +100,13 @@ export default function ContactListItem({
         </ListItemSecondaryAction>
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <ContactMore address={address} phone={phone} />
+        <Box display="flex" alignItems="center">
+          <ContactMore address={address} phone={phone} />
+          {/*TODO: add confirm dialog or undo functionality*/}
+          <IconButton onClick={() => onDelete(uuid)}>
+            <DeleteIcon />
+          </IconButton>
+        </Box>
       </Collapse>
     </React.Fragment>
   );

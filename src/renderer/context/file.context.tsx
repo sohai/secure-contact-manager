@@ -7,9 +7,10 @@ type Action =
   | { type: "set"; payload?: Contact[] }
   | { type: "clear" }
   | { type: "save_contact"; payload: Contact }
+  | { type: "delete_contact"; payload: string }
   | { type: "sync" }
   | { type: "sync_pending" }
-  | { type: " sync_success" }
+  | { type: "sync_success" }
   | { type: "sync_failed" };
 
 export type Dispatch = (action: Action) => void;
@@ -54,6 +55,12 @@ function fileReducer(state: State, action: Action): State {
           ...state.data.filter(({ uuid }) => uuid !== action.payload.uuid),
           action.payload,
         ],
+      };
+    }
+    case "delete_contact": {
+      return {
+        ...state,
+        data: state.data.filter(({ uuid }) => uuid !== action.payload),
       };
     }
     default: {
