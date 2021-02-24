@@ -6,7 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import AddIcon from "@material-ui/icons/Add";
-import MenuIcon from "@material-ui/icons/Menu";
+import CloseIcon from "@material-ui/icons/Close";
 import SearchIcon from "@material-ui/icons/Search";
 import React, { useEffect, useMemo, useState } from "react";
 import ContactListItem from "./ContactListItem";
@@ -130,7 +130,7 @@ export default function ContactList() {
       <AppBar position="fixed" color="primary" className={classes.appBar}>
         <Toolbar>
           <IconButton onClick={handleClear} edge="start" color="inherit">
-            <MenuIcon />
+            <CloseIcon />
           </IconButton>
           <Fab
             onClick={handleAddNewContact}
@@ -144,6 +144,7 @@ export default function ContactList() {
           {syncing && <CircularProgress />}
           <IconButton color="inherit">
             <SearchIcon />
+            
           </IconButton>
         </Toolbar>
       </AppBar>

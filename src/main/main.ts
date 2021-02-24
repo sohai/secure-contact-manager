@@ -1,20 +1,30 @@
-import { app, BrowserWindow, dialog, ipcMain, Menu, MenuItem } from "electron";
-import type { MenuItemConstructorOptions } from "electron/main";
-import { createReadStream, readdir, mkdir, access, writeFile } from "fs";
+import { app, BrowserWindow, ipcMain, Menu } from "electron";
+import type {
+  IpcMainInvokeEvent,
+  MenuItemConstructorOptions,
+} from "electron/main";
+import { readdir, mkdir, access } from "fs";
 import { promisify } from "util";
-import { Contact } from "../types/Contact";
-
-// require because of wierd typescript issue
-const path = require("path");
-const os = require("os");
+import type { Contact } from "../types/Contact";
+import crypto from "crypto";
+import * as path from "path";
+import * as os from "os";
+import {
+  encryptAndSave,
+  readAndDecryptFile as readAndDecryptFile,
+} from "./crypto";
 
 const readdirAsync = promisify(readdir);
 const mkdirAsync = promisify(mkdir);
 const accessAsync = promisify(access);
-const writeFileAsync = promisify(writeFile);
 
 // ideally user should be albe to select folder/file
 const appDir = path.resolve(os.homedir(), ".secure-contact-manager");
+const FILE_NAME = "contacts.json";
+
+function getCipherKey(key: string) {
+  return crypto.createHash("sha256").update(key).digest();
+}
 
 function createWindow() {
   // Create the browser window.
@@ -80,25 +90,23 @@ async function checkFile() {
 }
 
 async function createFile() {
-  await writeFileAsync(path.join(appDir, "contacts.json"), JSON.stringify([]));
+  await encryptAndSave(
+    path.join(appDir, FILE_NAME),
+    JSON.stringify([]),
+    "V9cL^S*gzEy^"
+  );
   return []; //return file content
 }
 
 async function openFile() {
   const files = await readdirAsync(appDir);
-
-  let content = "";
-  // example how we can you stream/async iterators to deal with files if we meet ant performance issue
-  const iterator = createReadStream(path.join(appDir, files[0]));
-  for await (const chunk of iterator) {
-    content += chunk;
-  }
-  return JSON.parse(content);
+  return readAndDecryptFile(path.join(appDir, files[0]), "V9cL^S*gzEy^");
 }
 
-async function saveFile(_, data: Contact[]) {
-  await writeFileAsync(
+async function saveFile(event: IpcMainInvokeEvent, data: Contact[]) {
+  await encryptAndSave(
     path.join(appDir, "contacts.json"),
-    JSON.stringify(data)
+    JSON.stringify(data),
+    "V9cL^S*gzEy^"
   );
 }

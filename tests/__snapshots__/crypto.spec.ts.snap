@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should encrypt ans save file 1`] = `
+Array [
+  Object {
+    "address": "116 Madeline Court, Maybell, Idaho, 2548",
+    "email": "barkercannon.@genmex.org",
+    "guid": "d9f4d6ce-b29f-42ee-8183-f7101336e124",
+    "name": "Barker Cannon",
+    "phone": "+1 (825) 557-3341",
+    "uuid": "6035133a9ebdc44d8b929034",
+  },
+]
+`;
+
+exports[`should read encrypted file 1`] = `
+Array [
+  Object {
+    "address": "116 Madeline Court, Maybell, Idaho, 2548",
+    "email": "barkercannon.@genmex.org",
+    "guid": "d9f4d6ce-b29f-42ee-8183-f7101336e124",
+    "name": "Barker Cannon",
+    "phone": "+1 (825) 557-3341",
+    "uuid": "6035133a9ebdc44d8b929034",
+  },
+]
+`;
