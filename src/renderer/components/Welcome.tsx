@@ -29,32 +29,31 @@ const useStyles = makeStyles((theme) => ({
 
 type FormData = { password: string };
 
+const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
 export default function Welcome() {
   const classes = useStyles();
 
   const dispatch = useFileDispatch();
   const { isLoaded } = useFileState();
   const [loadingFile, setLoadingFile] = useState(false);
-  const [initializing, setIsInitializing] = useState(true);
-  const [hasFile, setHasFile] = useState(false);
-  const [password, setPasword] = useState("");
+  const [hasFile, setHasFile] = useState(null);
 
   const { setError, handleSubmit, control, errors } = useForm<FormData>();
 
   useEffect(() => {
     let didCancel = false;
-    setIsInitializing(true);
     async function getInit() {
       const hasFile = await ipcRenderer.invoke("app:check-file");
       if (!didCancel) {
         setHasFile(hasFile);
-        setIsInitializing(false);
       }
     }
 
     getInit();
     return () => {
       didCancel = true;
+      console.log("exit");
     };
   }, []);
 
@@ -65,6 +64,7 @@ export default function Welcome() {
         hasFile ? "app:open-file" : "app:create-file",
         password
       );
+      setLoadingFile(false);
       dispatch({
         type: "set_contacts",
         payload: result,
@@ -74,14 +74,13 @@ export default function Welcome() {
         payload: password,
       });
     } catch (e) {
+      setLoadingFile(false);
       if (e.message.includes("BAD_DECRYPT")) {
         setError("password", {
           type: "server",
           message: "Wrong password",
         });
       }
-    } finally {
-      setLoadingFile(false);
     }
   };
 
@@ -90,21 +89,35 @@ export default function Welcome() {
       {isLoaded && <Redirect to="/app" />}
 
       <div className={classes.root}>
-        {initializing && <CircularProgress size={100} />}
-        {!initializing && (
+        {hasFile === null && <CircularProgress size={100} />}
+        {hasFile !== null && (
           <>
             <Typography align="center" variant="h5" gutterBottom>
-              Welcome to <br />
-              Simple Secure Contact Manager {hasFile}
+              <>
+                Welcome to <br />
+                Simple Secure Contact Manager {hasFile}
+              </>
             </Typography>
             <Typography>
               Please enter the password for your {hasFile ? "" : "new"} contact
               data file.
             </Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Box display="flex" alignItems="baseline">
+              <Box
+                display="flex"
+                alignItems="baseline"
+                width="300px"
+                height="132px"
+              >
                 <Controller
                   as={TextField}
+                  rules={{
+                    pattern: {
+                      value: passwordRegex,
+                      message:
+                        "Password not strong enought. Min 8 characters, upper and lower case letter, special character and number",
+                    },
+                  }}
                   margin="normal"
                   fullWidth
                   label="Password"

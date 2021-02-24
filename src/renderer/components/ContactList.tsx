@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 2, 0),
   },
   paper: {
-    paddingBottom: 50,
+    height: "100vh",
   },
   list: {
     marginBottom: theme.spacing(2),
