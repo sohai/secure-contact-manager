@@ -4171,6 +4171,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"flexsearch@npm:^0.6.22, flexsearch@npm:^0.6.32":
+  version: 0.6.32
+  resolution: "flexsearch@npm:0.6.32"
+  checksum: 8f9c852f98e15f7a4f402162b902422d267af875995e4bfe2ed422151431c36146cc40348b7411fe772a8f6ba65fa954bfd1cf437e81e36e581dd351a9e7fa38
+  languageName: node
+  linkType: hard
+
 "for-in@npm:^1.0.2":
   version: 1.0.2
   resolution: "for-in@npm:1.0.2"
@@ -7051,6 +7058,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-use-flexsearch@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "react-use-flexsearch@npm:0.1.1"
+  dependencies:
+    flexsearch: ^0.6.22
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 09805b32bdfe7c5e404b7f78f42811a94496d72d9dd7df0d59f74fe510f3343051632bce313e789ae161fde61739b5102fe1327f2b460852bb241423c60d0dce
+  languageName: node
+  linkType: hard
+
 "react@npm:^17.0.1":
   version: 17.0.1
   resolution: "react@npm:17.0.1"
@@ -7540,6 +7558,7 @@ __metadata:
     electron: ^11.3.0
     electron-reload: ^1.5.0
     electron-reloader: ^1.2.0
+    flexsearch: ^0.6.32
     jest: ^26.6.3
     prettier: ^2.2.1
     react: ^17.0.1
@@ -7547,6 +7566,7 @@ __metadata:
     react-hook-form: ^6.15.4
     react-router: ^5.2.0
     react-router-dom: ^5.2.0
+    react-use-flexsearch: ^0.1.1
     rollup-plugin-pnp-resolve: ^2.0.0
     snowpack: ^3.0.11
     tmp-promise: ^3.0.2

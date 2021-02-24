@@ -58,7 +58,13 @@ function ContactMore({ address, phone }: ContactMoreProps) {
       </IconTypography>
       <IconTypography color="textSecondary">
         <ContactMailIcon />
-        {address}
+        {Boolean(address)
+          ? address.split("\n").map((line) => (
+              <>
+                {line} <br />
+              </>
+            ))
+          : ""}
       </IconTypography>
     </ContactMoreListItem>
   );

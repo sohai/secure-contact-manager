@@ -1,22 +1,29 @@
+import React, { useEffect, useMemo, useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Fab from "@material-ui/core/Fab";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
+import { CircularProgress, TextField } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, styled } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import SearchIcon from "@material-ui/icons/Search";
-import React, { useEffect, useMemo, useState } from "react";
-import ContactListItem from "./ContactListItem";
-import { useFileDispatch, useFileState } from "../context/file.context";
 import { Redirect } from "react-router-dom";
+import FlexSearch from "flexsearch";
+import { useFileDispatch, useFileState } from "../context/file.context";
+import ContactListItem from "./ContactListItem";
 import ContactEditDialog from "./ContactEditDialog";
-import { CircularProgress } from "@material-ui/core";
+import { useFlexSearch } from "react-use-flexsearch";
 import type { Contact } from "../../types/Contact";
 
 const { ipcRenderer } = window.require("electron");
+
+const strigifyContact = ({ name, address, phone, email }: Contact) =>
+  `${name} ${email} ${phone} ${address}`;
+
+const SearchTextField = styled(TextField)({});
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -46,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
     margin: "0 auto",
   },
+  searchInput: {
+    color: "#fff",
+  },
 }));
 
 const NEW_CONTACT: Partial<Contact> = {
@@ -54,6 +64,8 @@ const NEW_CONTACT: Partial<Contact> = {
   phone: "",
   email: "",
 };
+
+const index = FlexSearch.create();
 
 export default function ContactList() {
   const classes = useStyles();
@@ -87,13 +99,19 @@ export default function ContactList() {
 
   /** I thnik its good to keep in store/context unsorted data and deal with it locally because
    * I can image that this app could have sorting functionality */
-  const memoizedContacts = useMemo(
-    () =>
-      contacts.sort((a, b) => {
-        return a.name.localeCompare(b.name);
-      }),
-    [contacts]
-  );
+  const memoizedContacts = useMemo(() => {
+    const result = contacts.sort((a, b) => {
+      return a.name.localeCompare(b.name);
+    });
+    index.clear();
+    for (var i = 0; i < contacts.length; i++) {
+      index.add(i, strigifyContact(contacts[i]));
+    }
+    return result;
+  }, [contacts]);
+
+  const [query, setQuery] = useState<string | null>("");
+  const results = useFlexSearch(query, index, memoizedContacts);
 
   const [editContact, setEditContact] = useState<Partial<Contact> | null>(null);
 
@@ -111,13 +129,16 @@ export default function ContactList() {
       payload: uuid,
     });
   };
+  const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(event.target.value);
+  };
 
   return (
     <React.Fragment>
       {!isLoaded && <Redirect to="/" />}
       <Paper square className={classes.paper}>
         <List className={classes.list} component="div">
-          {memoizedContacts.map((contact) => (
+          {(query ? results : memoizedContacts).map((contact: Contact) => (
             <ContactListItem
               key={contact.uuid}
               contact={contact}
@@ -142,6 +163,13 @@ export default function ContactList() {
           </Fab>
           <div className={classes.grow} />
           {syncing && <CircularProgress />}
+          <TextField
+            InputProps={{
+              className: classes.searchInput,
+            }}
+            value={query}
+            onChange={handleQueryChange}
+          />
           <IconButton color="inherit">
             <SearchIcon />
           </IconButton>

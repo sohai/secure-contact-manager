@@ -58,6 +58,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["electron", "npm:11.3.0"],
             ["electron-reload", "npm:1.5.0"],
             ["electron-reloader", "npm:1.2.0"],
+            ["flexsearch", "npm:0.6.32"],
             ["jest", "npm:26.6.3"],
             ["prettier", "npm:2.2.1"],
             ["react", "npm:17.0.1"],
@@ -65,6 +66,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-hook-form", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:6.15.4"],
             ["react-router", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:5.2.0"],
             ["react-router-dom", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:5.2.0"],
+            ["react-use-flexsearch", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:0.1.1"],
             ["rollup-plugin-pnp-resolve", "npm:2.0.0"],
             ["snowpack", "npm:3.0.11"],
             ["tmp-promise", "npm:3.0.2"],
@@ -5943,6 +5945,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["flexsearch", [
+        ["npm:0.6.32", {
+          "packageLocation": "./.yarn/cache/flexsearch-npm-0.6.32-43d39c2be7-8f9c852f98.zip/node_modules/flexsearch/",
+          "packageDependencies": [
+            ["flexsearch", "npm:0.6.32"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["for-in", [
         ["npm:1.0.2", {
           "packageLocation": "./.yarn/cache/for-in-npm-1.0.2-37e3d7aae5-e8d7280a65.zip/node_modules/for-in/",
@@ -9244,6 +9255,29 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["react-use-flexsearch", [
+        ["npm:0.1.1", {
+          "packageLocation": "./.yarn/cache/react-use-flexsearch-npm-0.1.1-c0453991df-09805b32bd.zip/node_modules/react-use-flexsearch/",
+          "packageDependencies": [
+            ["react-use-flexsearch", "npm:0.1.1"]
+          ],
+          "linkType": "SOFT",
+        }],
+        ["virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:0.1.1", {
+          "packageLocation": "./.yarn/$$virtual/react-use-flexsearch-virtual-e8dac2589d/0/cache/react-use-flexsearch-npm-0.1.1-c0453991df-09805b32bd.zip/node_modules/react-use-flexsearch/",
+          "packageDependencies": [
+            ["react-use-flexsearch", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:0.1.1"],
+            ["@types/react", "npm:17.0.2"],
+            ["flexsearch", "npm:0.6.32"],
+            ["react", "npm:17.0.1"]
+          ],
+          "packagePeers": [
+            "@types/react",
+            "react"
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["read-pkg", [
         ["npm:5.2.0", {
           "packageLocation": "./.yarn/cache/read-pkg-npm-5.2.0-50426bd8dc-641102f095.zip/node_modules/read-pkg/",
@@ -9783,6 +9817,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["electron", "npm:11.3.0"],
             ["electron-reload", "npm:1.5.0"],
             ["electron-reloader", "npm:1.2.0"],
+            ["flexsearch", "npm:0.6.32"],
             ["jest", "npm:26.6.3"],
             ["prettier", "npm:2.2.1"],
             ["react", "npm:17.0.1"],
@@ -9790,6 +9825,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-hook-form", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:6.15.4"],
             ["react-router", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:5.2.0"],
             ["react-router-dom", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:5.2.0"],
+            ["react-use-flexsearch", "virtual:ca99d32b0579af06483cd8cb152b142fc31634b373d3953656df764f8d13329098ea47690ebf247240e015680bfb3a6d821aa7edee7087cee6fbf1c91ae9634e#npm:0.1.1"],
             ["rollup-plugin-pnp-resolve", "npm:2.0.0"],
             ["snowpack", "npm:3.0.11"],
             ["tmp-promise", "npm:3.0.2"],

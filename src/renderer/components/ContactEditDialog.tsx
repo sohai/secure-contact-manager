@@ -12,6 +12,8 @@ type ContactEditDialogProps = Omit<DialogProps, "open"> & {
   contact: Partial<Contact>;
 };
 
+const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
 function ContactEditDialog({
   contact,
   onClose,
@@ -19,7 +21,7 @@ function ContactEditDialog({
 }: ContactEditDialogProps) {
   const dispatch = useFileDispatch();
 
-  const { register, handleSubmit, control } = useForm<Contact>();
+  const { register, handleSubmit, control, errors } = useForm<Contact>();
 
   const onSubmit = (data: Contact) => {
     dispatch({
@@ -43,39 +45,52 @@ function ContactEditDialog({
           />
           <Controller
             as={TextField}
-            margin="normal"
+            autoFocus
+            error={Boolean(errors.name)}
             fullWidth
             label="Name"
             name="name"
             control={control}
             defaultValue={contact.name}
+            rules={{
+              required: 'Name is required',
+            }}
+            helperText={errors.name ? errors.name.message : " "}
           />
           <Controller
             as={TextField}
-            margin="normal"
+            error={Boolean(errors.email)}
             fullWidth
             label="E-mail"
             name="email"
             control={control}
             defaultValue={contact.email}
+            rules={{
+              pattern: {
+                value: emailRegex,
+                message: "Wrong email",
+              },
+            }}
+            helperText={errors.email ? errors.email.message : " "}
           />
           <Controller
             as={TextField}
-            margin="normal"
             fullWidth
-            label="phone"
+            label="Phone"
             name="phone"
             control={control}
             defaultValue={contact.phone}
+            helperText={" "}
           />
           <Controller
             as={TextField}
-            margin="normal"
+            multiline
             fullWidth
-            label="address"
+            label="Address"
             name="address"
             control={control}
             defaultValue={contact.address}
+            helperText={" "}
           />
         </DialogContent>
         <DialogActions>

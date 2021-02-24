@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as os from "os";
-import { app, BrowserWindow, ipcMain, Menu } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import type { IpcMainInvokeEvent } from "electron/main";
 import { readdir, mkdir, access } from "fs";
 import { promisify } from "util";
