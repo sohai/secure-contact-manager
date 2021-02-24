@@ -58,7 +58,7 @@ const NEW_CONTACT: Partial<Contact> = {
 export default function ContactList() {
   const classes = useStyles();
 
-  const { data: contacts, isLoaded } = useFileState();
+  const { data: contacts, isLoaded, password } = useFileState();
   const dispatch = useFileDispatch();
 
   const [syncing, setSyncing] = useState(false);
@@ -67,7 +67,7 @@ export default function ContactList() {
     let didCancel = false;
     setSyncing(true);
     async function getInit() {
-      await ipcRenderer.invoke("app:save-file", contacts);
+      await ipcRenderer.invoke("app:save-file", contacts, password);
       if (!didCancel) {
         setSyncing(false);
       }
@@ -144,7 +144,6 @@ export default function ContactList() {
           {syncing && <CircularProgress />}
           <IconButton color="inherit">
             <SearchIcon />
-            
           </IconButton>
         </Toolbar>
       </AppBar>

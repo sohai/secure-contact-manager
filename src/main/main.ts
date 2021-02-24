@@ -1,18 +1,11 @@
+import * as path from "path";
+import * as os from "os";
 import { app, BrowserWindow, ipcMain, Menu } from "electron";
-import type {
-  IpcMainInvokeEvent,
-  MenuItemConstructorOptions,
-} from "electron/main";
+import type { IpcMainInvokeEvent } from "electron/main";
 import { readdir, mkdir, access } from "fs";
 import { promisify } from "util";
 import type { Contact } from "../types/Contact";
-import crypto from "crypto";
-import * as path from "path";
-import * as os from "os";
-import {
-  encryptAndSave,
-  readAndDecryptFile as readAndDecryptFile,
-} from "./crypto";
+import { encryptAndSave, readAndDecryptFile } from "./crypto";
 
 const readdirAsync = promisify(readdir);
 const mkdirAsync = promisify(mkdir);
@@ -21,10 +14,6 @@ const accessAsync = promisify(access);
 // ideally user should be albe to select folder/file
 const appDir = path.resolve(os.homedir(), ".secure-contact-manager");
 const FILE_NAME = "contacts.json";
-
-function getCipherKey(key: string) {
-  return crypto.createHash("sha256").update(key).digest();
-}
 
 function createWindow() {
   // Create the browser window.
@@ -41,15 +30,6 @@ function createWindow() {
   } else {
     mainWindow.loadURL("http://localhost:8080");
   }
-
-  const template: MenuItemConstructorOptions[] = [
-    {
-      label: "File",
-      submenu: [{ label: "asd", click: () => openFile() }],
-    },
-  ];
-  const menu = Menu.buildFromTemplate(template);
-  Menu.setApplicationMenu(menu);
 
   if (process.env.NODE_ENV !== "production") {
     // Open the DevTools.
@@ -89,24 +69,28 @@ async function checkFile() {
   }
 }
 
-async function createFile() {
+async function createFile(event: IpcMainInvokeEvent, password: string) {
   await encryptAndSave(
     path.join(appDir, FILE_NAME),
     JSON.stringify([]),
-    "V9cL^S*gzEy^"
+    password
   );
   return []; //return file content
 }
 
-async function openFile() {
+async function openFile(event: IpcMainInvokeEvent, password: string) {
   const files = await readdirAsync(appDir);
-  return readAndDecryptFile(path.join(appDir, files[0]), "V9cL^S*gzEy^");
+  return readAndDecryptFile(path.join(appDir, files[0]), password);
 }
 
-async function saveFile(event: IpcMainInvokeEvent, data: Contact[]) {
+async function saveFile(
+  event: IpcMainInvokeEvent,
+  data: Contact[],
+  password: string
+) {
   await encryptAndSave(
     path.join(appDir, "contacts.json"),
     JSON.stringify(data),
-    "V9cL^S*gzEy^"
+    password
   );
 }

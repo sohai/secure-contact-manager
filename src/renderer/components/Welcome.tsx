@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/styles";
-import { Button, CircularProgress, Typography } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import LoadingButton from "./LoadingButton";
 import { useFileDispatch, useFileState } from "../context/file.context";
 import { Redirect } from "react-router";
+import { Controller, useForm } from "react-hook-form";
 
 declare var window: any;
 
@@ -20,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+type FormData = { password: string };
+
 export default function Welcome() {
   const classes = useStyles();
 
@@ -28,6 +37,9 @@ export default function Welcome() {
   const [loadingFile, setLoadingFile] = useState(false);
   const [initializing, setIsInitializing] = useState(true);
   const [hasFile, setHasFile] = useState(false);
+  const [password, setPasword] = useState("");
+
+  const { setError, handleSubmit, control, errors } = useForm<FormData>();
 
   useEffect(() => {
     let didCancel = false;
@@ -46,22 +58,33 @@ export default function Welcome() {
     };
   }, []);
 
-  const handleClick = async () => {
+  const onSubmit = async ({ password }: FormData) => {
     setLoadingFile(true);
     try {
       const result = await ipcRenderer.invoke(
-        hasFile ? "app:open-file" : "app:create-file"
+        hasFile ? "app:open-file" : "app:create-file",
+        password
       );
       dispatch({
         type: "set_contacts",
         payload: result,
       });
-    } catch {
-      // TODO: error handling
+      dispatch({
+        type: "set_password",
+        payload: password,
+      });
+    } catch (e) {
+      if (e.message.includes("BAD_DECRYPT")) {
+        setError("password", {
+          type: "server",
+          message: "Wrong password",
+        });
+      }
     } finally {
       setLoadingFile(false);
     }
   };
+
   return (
     <>
       {isLoaded && <Redirect to="/app" />}
@@ -75,11 +98,28 @@ export default function Welcome() {
               Simple Secure Contact Manager {hasFile}
             </Typography>
             <Typography>
-              Please enter the password for your new contact data file.
+              Please enter the password for your {hasFile ? "" : "new"} contact
+              data file.
             </Typography>
-            <LoadingButton onClick={handleClick} loading={loadingFile}>
-              Test
-            </LoadingButton>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Box display="flex" alignItems="baseline">
+                <Controller
+                  as={TextField}
+                  margin="normal"
+                  fullWidth
+                  label="Password"
+                  name="password"
+                  control={control}
+                  defaultValue={""}
+                  type="password"
+                  error={!!errors.password}
+                  helperText={errors.password ? errors.password.message : ""}
+                />
+                <LoadingButton type="submit" loading={loadingFile}>
+                  {hasFile ? "Open" : "Create"}
+                </LoadingButton>
+              </Box>
+            </form>
           </>
         )}
       </div>

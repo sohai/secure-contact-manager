@@ -6,20 +6,32 @@ const { ipcRenderer } = window.require("electron");
 
 type Action =
   | { type: "reinit" }
+  | { type: "set_password"; payload: string }
   | { type: "set_contacts"; payload: Contact[] }
   | { type: "save_contact"; payload: Contact }
   | { type: "delete_contact"; payload: string };
 
 export type Dispatch = (action: Action) => void;
-export type State = { data: Contact[]; isLoaded: boolean };
+export type State = {
+  data: Contact[];
+  isLoaded: boolean;
+  password: string | null;
+};
 export type FileProviderProps = { children: React.ReactNode };
 
 const defaultValue = {
   data: [],
+  password: "V9cL^S*gzEy^",
   isLoaded: false,
 };
 function fileReducer(state: State, action: Action): State {
   switch (action.type) {
+    case "set_password": {
+      return {
+        ...state,
+        password: action.payload,
+      };
+    }
     case "set_contacts":
       return {
         ...state,
