@@ -1,11 +1,9 @@
 import { randomBytes } from "crypto";
-import { pipeline } from "stream";
 import { writeFile, createReadStream } from "fs";
 import * as crypto from "crypto";
 import { promisify } from "util";
 
 const writeFileAsync = promisify(writeFile);
-const pipelineAsync: any = promisify(pipeline);
 
 const ALHORITHM = "aes-256-cbc";
 const KEY_LENGTH = 32;
@@ -36,26 +34,18 @@ export async function encryptAndSave(
 
 export async function readAndDecryptFile(filePath: string, password: string) {
   const key = await getCipherKey(password);
-  const iv = await pipelineAsync(
-    createReadStream(filePath, { start: 0, end: IV_LENGTH - 1 }),
-    async (iterable: AsyncIterable<Buffer>) => {
-      let iv;
-      for await (const chunk of iterable) {
-        iv = chunk;
-      }
-      return iv;
-    }
-  );
-  const result = await pipelineAsync(
-    createReadStream(filePath, { start: IV_LENGTH }),
-    crypto.createDecipheriv(ALHORITHM, key, iv),
-    async (iterable: AsyncIterable<Buffer>) => {
-      let decrypted = "";
-      for await (const chunk of iterable) {
-        decrypted += chunk.toString();
-      }
-      return decrypted;
-    }
-  );
-  return JSON.parse(result);
+  const ivStream = createReadStream(filePath, { start: 0, end: IV_LENGTH - 1 });
+  let iv;
+  for await (const chunk of ivStream) {
+    iv = chunk;
+  }
+  const readStream = createReadStream(filePath, { start: IV_LENGTH });
+  const decipher = crypto.createDecipheriv(ALHORITHM, key, iv);
+  const decryptoStream = readStream.pipe(decipher);
+
+  let decrypted = "";
+  for await (const chunk of decryptoStream) {
+    decrypted += chunk.toString();
+  }
+  return JSON.parse(decrypted);
 }
