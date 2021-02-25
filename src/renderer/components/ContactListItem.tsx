@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import * as React from "react";
 import {
   Avatar,
   Box,
@@ -51,16 +51,16 @@ type ContactMoreProps = Pick<Contact, "address" | "phone">;
 function ContactMore({ address, phone }: ContactMoreProps) {
   return (
     <ContactMoreListItem component="div">
-      <IconTypography color="textSecondary">
+      <IconTypography key="phone" color="textSecondary">
         <PhoneIcon /> {phone}
       </IconTypography>
-      <IconTypography color="textSecondary">
+      <IconTypography key="address" color="textSecondary">
         <ContactMailIcon />
         {Boolean(address)
-          ? address.split("\n").map((line) => (
-              <>
+          ? address.split("\n").map((line, index) => (
+              <React.Fragment key={index}>
                 {line} <br />
-              </>
+              </React.Fragment>
             ))
           : ""}
       </IconTypography>
@@ -71,16 +71,16 @@ function ContactMore({ address, phone }: ContactMoreProps) {
 type ContactListItemProps = {
   contact: Contact;
   onEdit: (contact: Contact) => void;
-  onDelete: (contact: string) => void;
+  onDelete: (uuid: string) => void;
 };
 
 export default function ContactListItem({
   contact,
   onEdit,
   onDelete,
-}: ContactListItemProps): ReactElement {
+}: ContactListItemProps): React.ReactElement {
   const { name, email, address, phone, uuid } = contact;
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
   const handleClick = () => {
     setOpen(!open);
   };
@@ -93,12 +93,12 @@ export default function ContactListItem({
         </ListItemAvatar>
         <ListItemText primary={name} secondary={email} />
         <ListItemSecondaryAction>
-          <IconButton edge="end" aria-label="comments" onClick={handleClick}>
+          <IconButton edge="end" aria-label="more" onClick={handleClick}>
             <ExpandMoreIcon />
           </IconButton>
           <IconButton
             edge="end"
-            aria-label="comments"
+            aria-label="edit"
             onClick={() => onEdit(contact)}
           >
             <EditIcon />

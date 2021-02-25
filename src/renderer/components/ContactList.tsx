@@ -12,6 +12,7 @@ import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import SearchIcon from "@material-ui/icons/Search";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
+import { grey } from "@material-ui/core/colors";
 import { Redirect } from "react-router-dom";
 import FlexSearch from "flexsearch";
 import { useFileDispatch, useFileState } from "../context/file.context";
@@ -157,9 +158,12 @@ export default function ContactList(): ReactElement {
             height="100vh"
             alignItems="center"
             justifyContent="center"
+            flexDirection="column"
           >
-            <ImportContactsIcon />
-            <Typography variant="h3">Add your first contact</Typography>
+            <ImportContactsIcon style={{ fontSize: 120, color: grey[500] }} />
+            <Typography variant="h3" color="textSecondary">
+              Add your first contact
+            </Typography>
           </Box>
         )}
       </Paper>
