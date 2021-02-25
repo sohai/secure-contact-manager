@@ -1,10 +1,9 @@
+import React, { ReactElement, useState } from "react";
 import {
   Avatar,
   Box,
-  Button,
   Collapse,
   IconButton,
-  List,
   ListItem,
   ListItemAvatar,
   ListItemProps,
@@ -13,18 +12,17 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { styled } from "@material-ui/styles";
-import React, { useState } from "react";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import EditIcon from "@material-ui/icons/Edit";
 import PhoneIcon from "@material-ui/icons/Phone";
 import ContactMailIcon from "@material-ui/icons/ContactMail";
 import type { Contact } from "../../types/Contact";
-import DeleteIcon from "@material-ui/icons/Delete";
 
 /** I prefer to keep privet function/components in the same file until it is too big */
 
-const getInitials = (name: String) => {
+const getInitials = (name: string) => {
   const arr = name.split(" ");
   return arr[0][0] + (arr[1] ? arr[1][0] : "");
 };
@@ -80,7 +78,7 @@ export default function ContactListItem({
   contact,
   onEdit,
   onDelete,
-}: ContactListItemProps) {
+}: ContactListItemProps): ReactElement {
   const { name, email, address, phone, uuid } = contact;
   const [open, setOpen] = useState(false);
   const handleClick = () => {

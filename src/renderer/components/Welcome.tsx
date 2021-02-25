@@ -1,22 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactElement } from "react";
 import { makeStyles } from "@material-ui/styles";
 import {
   Box,
-  Button,
   CircularProgress,
   TextField,
   Typography,
 } from "@material-ui/core";
-import LoadingButton from "./LoadingButton";
-import { useFileDispatch, useFileState } from "../context/file.context";
 import { Redirect } from "react-router";
 import { Controller, useForm } from "react-hook-form";
-
-declare var window: any;
+import LoadingButton from "./LoadingButton";
+import { useFileDispatch, useFileState } from "../context/file.context";
 
 const { ipcRenderer } = window.require("electron");
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
     alignItems: "center",
@@ -31,7 +28,7 @@ type FormData = { password: string };
 
 const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
-export default function Welcome() {
+export default function Welcome(): ReactElement {
   const classes = useStyles();
 
   const dispatch = useFileDispatch();

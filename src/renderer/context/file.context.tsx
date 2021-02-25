@@ -2,7 +2,6 @@ import * as React from "react";
 import type { Contact } from "../../types/Contact";
 import { FileDispachContext, FileStateContext } from "./file.contex.providers";
 import { v4 as uuidv4 } from "uuid";
-const { ipcRenderer } = window.require("electron");
 
 type Action =
   | { type: "reinit" }
@@ -79,7 +78,7 @@ function fileReducer(state: State, action: Action): State {
   }
 }
 
-function FileProvider({ children }: FileProviderProps) {
+function FileProvider({ children }: FileProviderProps): React.ReactElement {
   const [state, dispatch] = React.useReducer(fileReducer, defaultValue);
 
   return (

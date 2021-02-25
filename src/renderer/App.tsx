@@ -1,12 +1,12 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
-import { FileProvider, useFileState } from "./context/file.context";
+import { FileProvider } from "./context/file.context";
 import AppRoutes from "./Routes";
 
 const theme = createMuiTheme();
 
-function App() {
+function App(): ReactElement {
   return (
     <ThemeProvider theme={theme}>
       <>

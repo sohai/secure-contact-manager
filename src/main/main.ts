@@ -31,10 +31,10 @@ function createWindow() {
     mainWindow.loadURL("http://localhost:8080");
   }
 
-  if (process.env.NODE_ENV !== "production") {
-    // Open the DevTools.
-    mainWindow.webContents.openDevTools();
-  }
+  // if (process.env.NODE_ENV !== "production") {
+  //   // Open the DevTools.
+  //   mainWindow.webContents.openDevTools();
+  // }
 }
 
 app.whenReady().then(createWindow);

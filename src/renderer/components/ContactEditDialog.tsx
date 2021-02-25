@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog, { DialogProps } from "@material-ui/core/Dialog";
@@ -18,7 +18,7 @@ function ContactEditDialog({
   contact,
   onClose,
   ...props
-}: ContactEditDialogProps) {
+}: ContactEditDialogProps): ReactElement {
   const dispatch = useFileDispatch();
 
   const { register, handleSubmit, control, errors } = useForm<Contact>();
@@ -53,7 +53,7 @@ function ContactEditDialog({
             control={control}
             defaultValue={contact.name}
             rules={{
-              required: 'Name is required',
+              required: "Name is required",
             }}
             helperText={errors.name ? errors.name.message : " "}
           />

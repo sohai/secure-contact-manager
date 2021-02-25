@@ -1,15 +1,17 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Fab from "@material-ui/core/Fab";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
-import { CircularProgress, TextField } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Paper from "@material-ui/core/Paper";
-import { makeStyles, styled } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import SearchIcon from "@material-ui/icons/Search";
+import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 import { Redirect } from "react-router-dom";
 import FlexSearch from "flexsearch";
 import { useFileDispatch, useFileState } from "../context/file.context";
@@ -17,13 +19,12 @@ import ContactListItem from "./ContactListItem";
 import ContactEditDialog from "./ContactEditDialog";
 import { useFlexSearch } from "react-use-flexsearch";
 import type { Contact } from "../../types/Contact";
+import { Box, Typography } from "@material-ui/core";
 
 const { ipcRenderer } = window.require("electron");
 
 const strigifyContact = ({ name, address, phone, email }: Contact) =>
   `${name} ${email} ${phone} ${address}`;
-
-const SearchTextField = styled(TextField)({});
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -67,7 +68,7 @@ const NEW_CONTACT: Partial<Contact> = {
 
 const index = FlexSearch.create();
 
-export default function ContactList() {
+export default function ContactList(): ReactElement {
   const classes = useStyles();
 
   const { data: contacts, isLoaded, password } = useFileState();
@@ -97,14 +98,14 @@ export default function ContactList() {
     });
   };
 
-  /** I thnik its good to keep in store/context unsorted data and deal with it locally because
+  /** I thnik its good to keep in store/context as unsorted data and deal with it locally because
    * I can image that this app could have sorting functionality */
   const memoizedContacts = useMemo(() => {
     const result = contacts.sort((a, b) => {
       return a.name.localeCompare(b.name);
     });
     index.clear();
-    for (var i = 0; i < contacts.length; i++) {
+    for (let i = 0; i < contacts.length; i++) {
       index.add(i, strigifyContact(contacts[i]));
     }
     return result;
@@ -137,16 +138,30 @@ export default function ContactList() {
     <React.Fragment>
       {!isLoaded && <Redirect to="/" />}
       <Paper square className={classes.paper}>
-        <List className={classes.list} component="div">
-          {(query ? results : memoizedContacts).map((contact: Contact) => (
-            <ContactListItem
-              key={contact.uuid}
-              contact={contact}
-              onEdit={(contact: Contact) => setEditContact(contact)}
-              onDelete={handleDeleteContact}
-            />
-          ))}
-        </List>
+        {memoizedContacts.length > 0 && (
+          <List className={classes.list} component="div">
+            {(query ? results : memoizedContacts).map((contact: Contact) => (
+              <ContactListItem
+                key={contact.uuid}
+                contact={contact}
+                onEdit={(contact: Contact) => setEditContact(contact)}
+                onDelete={handleDeleteContact}
+              />
+            ))}
+          </List>
+        )}
+        {memoizedContacts.length === 0 && (
+          <Box
+            component={Paper}
+            display="flex"
+            height="100vh"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <ImportContactsIcon />
+            <Typography variant="h3">Add your first contact</Typography>
+          </Box>
+        )}
       </Paper>
       <AppBar position="fixed" color="primary" className={classes.appBar}>
         <Toolbar>

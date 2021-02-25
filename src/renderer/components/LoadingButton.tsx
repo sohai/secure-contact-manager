@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { Button, ButtonProps, CircularProgress } from "@material-ui/core";
 
 type LoadingButtonProps = ButtonProps & { loading: boolean };
@@ -8,7 +8,7 @@ export default function LoadingButton({
   disabled,
   children,
   ...props
-}: LoadingButtonProps) {
+}: LoadingButtonProps): ReactElement {
   return (
     <Button disabled={loading || disabled} {...props}>
       {loading && <CircularProgress size={14} />}
